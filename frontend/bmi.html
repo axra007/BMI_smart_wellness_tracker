@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMI Calculator & Tracker — BMI+</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-layout">
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <a href="dashboard.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="bmi.html" class="nav-link active"><span class="nav-icon">🧮</span> BMI Calculator</a>
+      <a href="hydration.html" class="nav-link"><span class="nav-icon">💧</span> Hydration</a>
+      <a href="sleep.html" class="nav-link"><span class="nav-icon">😴</span> Sleep</a>
+      <a href="activity.html" class="nav-link"><span class="nav-icon">🏃</span> Activity</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">😊</span> Mood Check-in</a>
+      <a href="goals.html" class="nav-link"><span class="nav-icon">🎯</span> Goals & Checklist</a>
+      <a href="progress.html" class="nav-link"><span class="nav-icon">📊</span> Progress</a>
+      <a href="achievements.html" class="nav-link"><span class="nav-icon">🏆</span> Achievements</a>
+      <a href="profile.html" class="nav-link"><span class="nav-icon">👤</span> Profile</a>
+      <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-badge">
+        <div class="user-avatar-circle">U</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">User</span>
+          <span class="user-mini-xp">0 XP</span>
+        </div>
+      </div>
+      <button class="btn-logout-action" title="Logout" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--text-muted);">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Container -->
+  <div class="app-main">
+    <header class="app-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" aria-label="Open Sidebar Menu">☰</button>
+        <span style="font-weight: 700; color: var(--text-muted); font-size: 0.95rem;">BMI Calculator & History</span>
+      </div>
+
+      <div class="topbar-gamification">
+        <span id="topbar-streak-val" class="gamify-pill streak">🔥 0 Day Streak</span>
+        <span id="topbar-xp-val" class="gamify-pill xp">⭐ 0 XP</span>
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">🧮 BMI Calculator</h1>
+          <p class="page-subtitle">Calculate and track your Body Mass Index (BMI = kg / m²).</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Calculator Form -->
+        <div class="card">
+          <h3 style="margin-bottom: 1.25rem;">Calculate New BMI Record</h3>
+          <form id="bmi-calc-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bmi-height">Height (cm)</label>
+                <input type="number" id="bmi-height" class="form-control" placeholder="e.g. 175" min="30" max="280" step="0.1" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bmi-weight">Weight (kg)</label>
+                <input type="number" id="bmi-weight" class="form-control" placeholder="e.g. 70" min="10" max="500" step="0.1" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="bmi-notes">Optional Note</label>
+              <input type="text" id="bmi-notes" class="form-control" placeholder="e.g. Morning fasting measurement" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-full">
+              Calculate & Log BMI
+            </button>
+          </form>
+
+          <!-- Result & Gauge Preview -->
+          <div id="bmi-result-card" style="display: none; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Your BMI Score</div>
+                <div id="bmi-display-value" style="font-size: 2.75rem; font-weight: 900; color: var(--text-main); line-height: 1.1;">22.4</div>
+              </div>
+              <span id="bmi-display-category" class="bmi-category-badge badge-success">Healthy</span>
+            </div>
+
+            <!-- Visual BMI Meter Scale -->
+            <div class="bmi-scale-meter">
+              <div class="bmi-segments-bar">
+                <div class="bmi-seg seg-underweight" title="Underweight (< 18.5)"></div>
+                <div class="bmi-seg seg-healthy" title="Healthy (18.5 - 24.9)"></div>
+                <div class="bmi-seg seg-overweight" title="Overweight (25.0 - 29.9)"></div>
+                <div class="bmi-seg seg-obese" title="Obese (>= 30.0)"></div>
+              </div>
+              <div class="bmi-labels-row">
+                <span>Underweight (&lt;18.5)</span>
+                <span>Healthy (18.5-24.9)</span>
+                <span>Overweight (25-29.9)</span>
+                <span>Obese (&ge;30)</span>
+              </div>
+            </div>
+
+            <div id="bmi-display-feedback" style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem; padding: 0.75rem 1rem; background: var(--bg-surface-secondary); border-radius: var(--radius-md);">
+            </div>
+          </div>
+        </div>
+
+        <!-- BMI Chart Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📈 BMI Trend Over Time</span>
+          </div>
+          <div class="chart-card-wrapper">
+            <canvas id="bmi-trend-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Table -->
+      <div class="card" style="margin-top: 2rem;">
+        <div class="card-header">
+          <span class="card-title">📋 Measurement History</span>
+        </div>
+        <div id="bmi-history-container" class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>BMI</th>
+                <th>Category</th>
+                <th>Weight</th>
+                <th>Height</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody id="bmi-history-tbody">
+              <tr><td colspan="6" style="text-align: center;">Loading history...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/bmi.js"></script>
+</body>
+</html>
+

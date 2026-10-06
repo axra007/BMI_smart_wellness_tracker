@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalize Your Wellness — BMI+</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="auth-page">
+  <!-- Header -->
+  <header class="public-header">
+    <div class="container public-nav">
+      <a href="index.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Setup Card -->
+  <main class="auth-wrapper">
+    <div class="auth-card" style="max-width: 520px;">
+      <div class="auth-header">
+        <div class="auth-badge">🎯 Step 2 of 2: Setup</div>
+        <h1 class="auth-title">Let's personalize BMI+</h1>
+        <p class="auth-subtitle">Provide your baseline measurements for tailored wellness calculations.</p>
+      </div>
+
+      <div id="setup-alert" class="form-alert"></div>
+
+      <form id="profile-setup-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="setup-age">Age (Years)</label>
+          <input type="number" id="setup-age" class="form-control" placeholder="e.g. 21" min="1" max="120" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="setup-height">Height (cm)</label>
+            <input type="number" id="setup-height" class="form-control" placeholder="e.g. 175" min="30" max="280" step="0.5" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="setup-weight">Current Weight (kg)</label>
+            <input type="number" id="setup-weight" class="form-control" placeholder="e.g. 68" min="10" max="500" step="0.1" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Daily Activity Level</label>
+          <div class="activity-levels-grid">
+            <label class="activity-option">
+              <input type="radio" name="activityLevel" value="Low" />
+              <div class="activity-card-label">
+                <span class="option-icon">🛋️</span>
+                <span class="option-title">Low</span>
+                <span class="option-desc">Mostly seated</span>
+              </div>
+            </label>
+
+            <label class="activity-option">
+              <input type="radio" name="activityLevel" value="Moderate" checked />
+              <div class="activity-card-label">
+                <span class="option-icon">🚶</span>
+                <span class="option-title">Moderate</span>
+                <span class="option-desc">Light exercise</span>
+              </div>
+            </label>
+
+            <label class="activity-option">
+              <input type="radio" name="activityLevel" value="Active" />
+              <div class="activity-card-label">
+                <span class="option-icon">⚡</span>
+                <span class="option-title">Active</span>
+                <span class="option-desc">Heavy workouts</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg w-full" style="margin-top: 1rem;">
+          Continue to Dashboard →
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/profile-setup.js"></script>
+</body>
+</html>
+

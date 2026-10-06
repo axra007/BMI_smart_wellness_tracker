@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — BMI+ Smart Wellness Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="app-layout">
+  <!-- App Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <a href="dashboard.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link active"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="bmi.html" class="nav-link"><span class="nav-icon">🧮</span> BMI Calculator</a>
+      <a href="hydration.html" class="nav-link"><span class="nav-icon">💧</span> Hydration</a>
+      <a href="sleep.html" class="nav-link"><span class="nav-icon">😴</span> Sleep</a>
+      <a href="activity.html" class="nav-link"><span class="nav-icon">🏃</span> Activity</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">😊</span> Mood Check-in</a>
+      <a href="goals.html" class="nav-link"><span class="nav-icon">🎯</span> Goals & Checklist</a>
+      <a href="progress.html" class="nav-link"><span class="nav-icon">📊</span> Progress</a>
+      <a href="achievements.html" class="nav-link"><span class="nav-icon">🏆</span> Achievements</a>
+      <a href="profile.html" class="nav-link"><span class="nav-icon">👤</span> Profile</a>
+      <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-badge">
+        <div class="user-avatar-circle">U</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">User</span>
+          <span class="user-mini-xp">0 XP</span>
+        </div>
+      </div>
+      <button class="btn-logout-action" title="Logout" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--text-muted);">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <!-- App Main Area -->
+  <div class="app-main">
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" aria-label="Open Sidebar Menu">☰</button>
+        <span style="font-weight: 700; color: var(--text-muted); font-size: 0.95rem;">Wellness Dashboard</span>
+      </div>
+
+      <div class="topbar-gamification">
+        <span id="topbar-streak-val" class="gamify-pill streak">🔥 0 Day Streak</span>
+        <span id="topbar-xp-val" class="gamify-pill xp">⭐ 0 XP</span>
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="app-content">
+      <!-- Header Greeting & Motivational Banner -->
+      <div class="page-header">
+        <div>
+          <h1 id="dash-greeting" class="page-title">Good morning, User 👋</h1>
+          <p class="page-subtitle">Here's your wellness overview today.</p>
+        </div>
+        <div>
+          <a href="goals.html" class="btn btn-primary">+ Manage Goals</a>
+        </div>
+      </div>
+
+      <!-- Motivational Note -->
+      <div class="note-banner">
+        <div class="note-banner-icon">💡</div>
+        <div id="dash-today-note" class="note-banner-text">
+          Small positive habits every day lead to massive wellness transformations!
+        </div>
+      </div>
+
+      <!-- Core Metrics Grid -->
+      <div class="metrics-grid">
+        <!-- Metric 1: BMI -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">BMI Score</span>
+            <div class="metric-icon-box" style="color: #10b981;">🧮</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="dash-bmi-val" class="metric-value">--</span>
+            <span id="dash-bmi-cat" class="badge badge-info" style="margin-left: 0.5rem;">Loading</span>
+          </div>
+          <div id="dash-bmi-sub" class="metric-subtext">
+            <span>Loading measurements...</span>
+          </div>
+        </div>
+
+        <!-- Metric 2: Hydration -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Water Intake</span>
+            <div class="metric-icon-box" style="color: #38bdf8;">💧</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="dash-water-val" class="metric-value">0.0 L</span>
+            <span id="dash-water-goal" class="metric-unit">of 2.0 L</span>
+          </div>
+          <div class="progress-bar-container">
+            <div id="dash-water-fill" class="progress-bar-fill" style="width: 0%; background: #38bdf8;"></div>
+          </div>
+          <div id="dash-water-percent" class="metric-subtext">0% of daily goal</div>
+        </div>
+
+        <!-- Metric 3: Sleep -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Sleep Duration</span>
+            <div class="metric-icon-box" style="color: #8b5cf6;">😴</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="dash-sleep-val" class="metric-value">--</span>
+          </div>
+          <div id="dash-sleep-sub" class="metric-subtext">
+            <span>No sleep logged yet</span>
+          </div>
+        </div>
+
+        <!-- Metric 4: Activity -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Physical Activity</span>
+            <div class="metric-icon-box" style="color: #f59e0b;">🏃</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="dash-activity-val" class="metric-value">0 min</span>
+            <span id="dash-activity-goal" class="metric-unit">Goal: 30 min</span>
+          </div>
+          <div class="progress-bar-container">
+            <div id="dash-activity-fill" class="progress-bar-fill" style="width: 0%; background: #f59e0b;"></div>
+          </div>
+          <div id="dash-activity-percent" class="metric-subtext">0 steps • 0 kcal</div>
+        </div>
+      </div>
+
+      <!-- Dashboard Two Column Section -->
+      <div class="dashboard-grid">
+        <!-- Column 1: Today's Goals & Mood -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <!-- Goals Card -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🎯 Today's Goals & Habits</span>
+              <span id="dash-goals-progress-text" class="badge badge-success">0 / 0 Complete</span>
+            </div>
+            <div class="progress-bar-container">
+              <div id="dash-goals-progress-bar" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div id="dash-goals-list" class="checklist-items">
+              <div class="skeleton" style="height: 45px; margin-bottom: 0.5rem;"></div>
+              <div class="skeleton" style="height: 45px;"></div>
+            </div>
+          </div>
+
+          <!-- Mood Reflection Card -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">😊 Daily Mood Check-in</span>
+              <a href="mood.html" class="btn btn-sm btn-outline">Check In</a>
+            </div>
+            <div id="dash-mood-display" style="text-align: center; padding: 1rem 0;">
+              <div class="skeleton" style="height: 60px; max-width: 240px; margin: 0 auto;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: 4-Pillar Daily Checklist & Quick Actions -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div class="checklist-card">
+            <div class="card-title">📋 4-Pillar Wellness Checklist</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+              Complete all 4 daily pillars to maximize your streak and XP!
+            </p>
+            <div id="dash-core-checklist" class="checklist-items">
+              <div class="skeleton" style="height: 40px;"></div>
+              <div class="skeleton" style="height: 40px;"></div>
+              <div class="skeleton" style="height: 40px;"></div>
+              <div class="skeleton" style="height: 40px;"></div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="card">
+            <div class="card-title" style="margin-bottom: 1rem;">⚡ Quick Actions</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <a href="hydration.html" class="btn btn-secondary btn-sm" style="justify-content: flex-start;">💧 + Water</a>
+              <a href="activity.html" class="btn btn-secondary btn-sm" style="justify-content: flex-start;">🏃 + Activity</a>
+              <a href="sleep.html" class="btn btn-secondary btn-sm" style="justify-content: flex-start;">😴 + Sleep</a>
+              <a href="bmi.html" class="btn btn-secondary btn-sm" style="justify-content: flex-start;">🧮 + BMI</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
+

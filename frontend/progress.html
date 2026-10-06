@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress Analytics — BMI+</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-layout">
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <a href="dashboard.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="bmi.html" class="nav-link"><span class="nav-icon">🧮</span> BMI Calculator</a>
+      <a href="hydration.html" class="nav-link"><span class="nav-icon">💧</span> Hydration</a>
+      <a href="sleep.html" class="nav-link"><span class="nav-icon">😴</span> Sleep</a>
+      <a href="activity.html" class="nav-link"><span class="nav-icon">🏃</span> Activity</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">😊</span> Mood Check-in</a>
+      <a href="goals.html" class="nav-link"><span class="nav-icon">🎯</span> Goals & Checklist</a>
+      <a href="progress.html" class="nav-link active"><span class="nav-icon">📊</span> Progress</a>
+      <a href="achievements.html" class="nav-link"><span class="nav-icon">🏆</span> Achievements</a>
+      <a href="profile.html" class="nav-link"><span class="nav-icon">👤</span> Profile</a>
+      <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-badge">
+        <div class="user-avatar-circle">U</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">User</span>
+          <span class="user-mini-xp">0 XP</span>
+        </div>
+      </div>
+      <button class="btn-logout-action" title="Logout" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--text-muted);">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" aria-label="Open Sidebar Menu">☰</button>
+        <span style="font-weight: 700; color: var(--text-muted); font-size: 0.95rem;">Progress Analytics</span>
+      </div>
+
+      <div class="topbar-gamification">
+        <span id="topbar-streak-val" class="gamify-pill streak">🔥 0 Day Streak</span>
+        <span id="topbar-xp-val" class="gamify-pill xp">⭐ 0 XP</span>
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">📊 Your Progress</h1>
+          <p class="page-subtitle">Historical trends and aggregated performance across all wellness metrics.</p>
+        </div>
+
+        <!-- Timeframe Buttons -->
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-secondary btn-sm timeframe-btn" data-timeframe="today">Today</button>
+          <button class="btn btn-primary btn-sm timeframe-btn active" data-timeframe="week">Week</button>
+          <button class="btn btn-secondary btn-sm timeframe-btn" data-timeframe="month">Month</button>
+        </div>
+      </div>
+
+      <!-- Performance Summary Cards -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Water Goal Met</span>
+            <div class="metric-icon-box" style="color: #38bdf8;">💧</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="prog-water-pct" class="metric-value">0%</span>
+          </div>
+          <div class="metric-subtext">Days reaching 100% fluid target</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Sleep Target Met</span>
+            <div class="metric-icon-box" style="color: #8b5cf6;">😴</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="prog-sleep-pct" class="metric-value">0%</span>
+          </div>
+          <div class="metric-subtext">Days with 7+ hours restful sleep</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Activity Goal Met</span>
+            <div class="metric-icon-box" style="color: #f59e0b;">🏃</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="prog-act-pct" class="metric-value">0%</span>
+          </div>
+          <div class="metric-subtext">Days reaching active minutes goal</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Goals Completed</span>
+            <div class="metric-icon-box" style="color: #10b981;">🎯</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="prog-goals-pct" class="metric-value">0%</span>
+          </div>
+          <div class="metric-subtext">Total checklist completion rate</div>
+        </div>
+      </div>
+
+      <!-- Charts 2x2 Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.5rem;">
+        <!-- Water Chart -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💧 Hydration Intake (L)</span>
+          </div>
+          <div class="chart-card-wrapper">
+            <canvas id="prog-chart-water"></canvas>
+          </div>
+        </div>
+
+        <!-- Sleep Chart -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">😴 Sleep Duration (Hours)</span>
+          </div>
+          <div class="chart-card-wrapper">
+            <canvas id="prog-chart-sleep"></canvas>
+          </div>
+        </div>
+
+        <!-- Activity Chart -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏃 Activity Duration (Mins)</span>
+          </div>
+          <div class="chart-card-wrapper">
+            <canvas id="prog-chart-activity"></canvas>
+          </div>
+        </div>
+
+        <!-- BMI Chart -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📈 BMI Trend Over Time</span>
+          </div>
+          <div class="chart-card-wrapper">
+            <canvas id="prog-chart-bmi"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/progress.js"></script>
+</body>
+</html>
+

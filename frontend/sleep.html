@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sleep Tracker — BMI+</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-layout">
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <a href="dashboard.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="bmi.html" class="nav-link"><span class="nav-icon">🧮</span> BMI Calculator</a>
+      <a href="hydration.html" class="nav-link"><span class="nav-icon">💧</span> Hydration</a>
+      <a href="sleep.html" class="nav-link active"><span class="nav-icon">😴</span> Sleep</a>
+      <a href="activity.html" class="nav-link"><span class="nav-icon">🏃</span> Activity</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">😊</span> Mood Check-in</a>
+      <a href="goals.html" class="nav-link"><span class="nav-icon">🎯</span> Goals & Checklist</a>
+      <a href="progress.html" class="nav-link"><span class="nav-icon">📊</span> Progress</a>
+      <a href="achievements.html" class="nav-link"><span class="nav-icon">🏆</span> Achievements</a>
+      <a href="profile.html" class="nav-link"><span class="nav-icon">👤</span> Profile</a>
+      <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-badge">
+        <div class="user-avatar-circle">U</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">User</span>
+          <span class="user-mini-xp">0 XP</span>
+        </div>
+      </div>
+      <button class="btn-logout-action" title="Logout" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--text-muted);">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" aria-label="Open Sidebar Menu">☰</button>
+        <span style="font-weight: 700; color: var(--text-muted); font-size: 0.95rem;">Sleep Tracker</span>
+      </div>
+
+      <div class="topbar-gamification">
+        <span id="topbar-streak-val" class="gamify-pill streak">🔥 0 Day Streak</span>
+        <span id="topbar-xp-val" class="gamify-pill xp">⭐ 0 XP</span>
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">😴 Sleep Tracking</h1>
+          <p class="page-subtitle">Track your bedtime routines, rest duration, and sleep quality.</p>
+        </div>
+      </div>
+
+      <!-- Feedback Insight Banner -->
+      <div class="note-banner" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(59, 130, 246, 0.12)); border-color: rgba(139, 92, 246, 0.25);">
+        <div class="note-banner-icon">🌙</div>
+        <div id="sleep-feedback-text" class="note-banner-text">
+          Log your sleep times to receive weekly rest averages and healthy routine insights.
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Log Sleep Form -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🛏️ Log Sleep Record</span>
+          </div>
+
+          <form id="sleep-log-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="sleep-bedtime">Bedtime</label>
+                <input type="time" id="sleep-bedtime" class="form-control" value="23:00" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="sleep-waketime">Wake-up Time</label>
+                <input type="time" id="sleep-waketime" class="form-control" value="07:00" required />
+              </div>
+            </div>
+
+            <div id="sleep-duration-preview" style="font-size: 0.9rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 1.25rem;">
+              Calculated Duration: 8h 0m
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="sleep-quality">Sleep Quality</label>
+              <select id="sleep-quality" class="form-control">
+                <option value="Excellent">⭐ Excellent (Deep & Restful)</option>
+                <option value="Good" selected>🙂 Good (Normal rest)</option>
+                <option value="Fair">😐 Fair (Woke up a few times)</option>
+                <option value="Poor">🥱 Poor (Restless / Interrupted)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="sleep-notes">Optional Notes</label>
+              <input type="text" id="sleep-notes" class="form-control" placeholder="e.g. Read for 20 mins before sleeping" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-full">
+              Log Sleep Record
+            </button>
+          </form>
+        </div>
+
+        <!-- Last Night Card & Weekly Chart -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🛌 Last Night's Sleep</span>
+            </div>
+            <div style="text-align: center; padding: 1rem 0;">
+              <div id="sleep-last-night-val" style="font-size: 3rem; font-weight: 900; color: var(--accent-purple); line-height: 1;">--</div>
+              <div id="sleep-last-night-sub" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">No record yet</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📊 7-Day Sleep Duration</span>
+            </div>
+            <div class="chart-card-wrapper">
+              <canvas id="sleep-weekly-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/sleep.js"></script>
+</body>
+</html>
+

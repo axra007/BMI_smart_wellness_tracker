@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Goals & Checklist — BMI+</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="app-layout">
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <a href="dashboard.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="bmi.html" class="nav-link"><span class="nav-icon">🧮</span> BMI Calculator</a>
+      <a href="hydration.html" class="nav-link"><span class="nav-icon">💧</span> Hydration</a>
+      <a href="sleep.html" class="nav-link"><span class="nav-icon">😴</span> Sleep</a>
+      <a href="activity.html" class="nav-link"><span class="nav-icon">🏃</span> Activity</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">😊</span> Mood Check-in</a>
+      <a href="goals.html" class="nav-link active"><span class="nav-icon">🎯</span> Goals & Checklist</a>
+      <a href="progress.html" class="nav-link"><span class="nav-icon">📊</span> Progress</a>
+      <a href="achievements.html" class="nav-link"><span class="nav-icon">🏆</span> Achievements</a>
+      <a href="profile.html" class="nav-link"><span class="nav-icon">👤</span> Profile</a>
+      <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-badge">
+        <div class="user-avatar-circle">U</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">User</span>
+          <span class="user-mini-xp">0 XP</span>
+        </div>
+      </div>
+      <button class="btn-logout-action" title="Logout" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--text-muted);">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" aria-label="Open Sidebar Menu">☰</button>
+        <span style="font-weight: 700; color: var(--text-muted); font-size: 0.95rem;">Goals & Habits</span>
+      </div>
+
+      <div class="topbar-gamification">
+        <span id="topbar-streak-val" class="gamify-pill streak">🔥 0 Day Streak</span>
+        <span id="topbar-xp-val" class="gamify-pill xp">⭐ 0 XP</span>
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">🎯 Daily Goals & Habits</h1>
+          <p class="page-subtitle">Check off your wellness habits to build your streak and earn bonus XP.</p>
+        </div>
+      </div>
+
+      <!-- Goals Overview Banner -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-header">
+          <div>
+            <span class="card-title">Today's Goal Completion</span>
+            <span id="goals-count-text" style="font-size: 0.85rem; color: var(--text-muted);">0 / 0 Complete</span>
+          </div>
+          <span id="goals-percent-text" class="badge badge-success" style="font-size: 1rem;">0%</span>
+        </div>
+        <div class="progress-bar-container" style="height: 12px;">
+          <div id="goals-progress-fill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Checklist Column -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📋 Today's Checklist</span>
+          </div>
+          <div id="goals-items-container" class="checklist-items">
+            <div class="skeleton" style="height: 50px;"></div>
+            <div class="skeleton" style="height: 50px;"></div>
+            <div class="skeleton" style="height: 50px;"></div>
+          </div>
+        </div>
+
+        <!-- Add Custom Goal Form -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">➕ Add Custom Goal</span>
+          </div>
+
+          <form id="new-goal-form">
+            <div class="form-group">
+              <label class="form-label" for="goal-title">Goal Title</label>
+              <input type="text" id="goal-title" class="form-control" placeholder="e.g. 15 mins mindful meditation" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="goal-category">Category</label>
+              <select id="goal-category" class="form-control">
+                <option value="wellness">🌿 General Wellness</option>
+                <option value="activity">🏃 Fitness / Activity</option>
+                <option value="hydration">💧 Hydration</option>
+                <option value="sleep">😴 Sleep & Rest</option>
+                <option value="mood">😊 Mindfulness</option>
+                <option value="custom">🎯 Custom Goal</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="goal-xp">XP Reward</label>
+              <input type="number" id="goal-xp" class="form-control" value="20" min="5" max="50" step="5" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-full">
+              Add Goal
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/goals.js"></script>
+</body>
+</html>
+

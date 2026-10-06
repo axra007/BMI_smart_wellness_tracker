@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile — BMI+</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="app-layout">
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <a href="dashboard.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="bmi.html" class="nav-link"><span class="nav-icon">🧮</span> BMI Calculator</a>
+      <a href="hydration.html" class="nav-link"><span class="nav-icon">💧</span> Hydration</a>
+      <a href="sleep.html" class="nav-link"><span class="nav-icon">😴</span> Sleep</a>
+      <a href="activity.html" class="nav-link"><span class="nav-icon">🏃</span> Activity</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">😊</span> Mood Check-in</a>
+      <a href="goals.html" class="nav-link"><span class="nav-icon">🎯</span> Goals & Checklist</a>
+      <a href="progress.html" class="nav-link"><span class="nav-icon">📊</span> Progress</a>
+      <a href="achievements.html" class="nav-link"><span class="nav-icon">🏆</span> Achievements</a>
+      <a href="profile.html" class="nav-link active"><span class="nav-icon">👤</span> Profile</a>
+      <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-badge">
+        <div class="user-avatar-circle">U</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">User</span>
+          <span class="user-mini-xp">0 XP</span>
+        </div>
+      </div>
+      <button class="btn-logout-action" title="Logout" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--text-muted);">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" aria-label="Open Sidebar Menu">☰</button>
+        <span style="font-weight: 700; color: var(--text-muted); font-size: 0.95rem;">User Profile</span>
+      </div>
+
+      <div class="topbar-gamification">
+        <span id="topbar-streak-val" class="gamify-pill streak">🔥 0 Day Streak</span>
+        <span id="topbar-xp-val" class="gamify-pill xp">⭐ 0 XP</span>
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">👤 User Profile</h1>
+          <p class="page-subtitle">Manage your personal metrics and custom wellness targets.</p>
+        </div>
+      </div>
+
+      <!-- Profile Header Summary Card -->
+      <div class="card" style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+        <div id="prof-header-avatar" class="user-avatar-circle" style="width: 72px; height: 72px; font-size: 2rem;">U</div>
+        <div style="flex: 1;">
+          <h2 id="prof-header-name" style="font-size: 1.5rem; margin-bottom: 0.25rem;">User Name</h2>
+          <div id="prof-header-email" style="color: var(--text-muted); font-size: 0.9rem;">user@example.com</div>
+          <div id="prof-header-bmi" class="badge badge-success" style="margin-top: 0.5rem;">BMI: Calculating...</div>
+        </div>
+      </div>
+
+      <!-- Edit Profile Form -->
+      <div class="card" style="max-width: 800px;">
+        <div class="card-header">
+          <span class="card-title">✏️ Edit Personal & Wellness Details</span>
+        </div>
+
+        <form id="profile-edit-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prof-name">Full Name</label>
+              <input type="text" id="prof-name" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="prof-email">Email Address</label>
+              <input type="email" id="prof-email" class="form-control" readonly style="opacity: 0.7; cursor: not-allowed;" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prof-age">Age (Years)</label>
+              <input type="number" id="prof-age" class="form-control" min="1" max="120" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="prof-activity-level">Activity Level</label>
+              <select id="prof-activity-level" class="form-control">
+                <option value="Low">Low (Sedentary lifestyle)</option>
+                <option value="Moderate">Moderate (Light activity)</option>
+                <option value="Active">Active (Intense workouts)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prof-height">Height (cm)</label>
+              <input type="number" id="prof-height" class="form-control" min="30" max="280" step="0.5" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="prof-weight">Weight (kg)</label>
+              <input type="number" id="prof-weight" class="form-control" min="10" max="500" step="0.1" />
+            </div>
+          </div>
+
+          <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1.5rem 0;" />
+          <h4 style="margin-bottom: 1rem;">🎯 Custom Wellness Goals</h4>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prof-water-goal">Daily Water Goal (Liters)</label>
+              <input type="number" id="prof-water-goal" class="form-control" min="0.5" max="10" step="0.1" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="prof-sleep-goal">Daily Sleep Goal (Hours)</label>
+              <input type="number" id="prof-sleep-goal" class="form-control" min="4" max="14" step="0.5" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prof-activity-goal">Daily Activity Goal (Minutes)</label>
+            <input type="number" id="prof-activity-goal" class="form-control" min="10" max="300" step="5" />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 1rem;">
+            Save Profile Changes
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Achievements & Badges — BMI+</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="app-layout">
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <a href="dashboard.html" class="brand-logo">
+        <span>🌱 BMI<span class="brand-plus">+</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="bmi.html" class="nav-link"><span class="nav-icon">🧮</span> BMI Calculator</a>
+      <a href="hydration.html" class="nav-link"><span class="nav-icon">💧</span> Hydration</a>
+      <a href="sleep.html" class="nav-link"><span class="nav-icon">😴</span> Sleep</a>
+      <a href="activity.html" class="nav-link"><span class="nav-icon">🏃</span> Activity</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">😊</span> Mood Check-in</a>
+      <a href="goals.html" class="nav-link"><span class="nav-icon">🎯</span> Goals & Checklist</a>
+      <a href="progress.html" class="nav-link"><span class="nav-icon">📊</span> Progress</a>
+      <a href="achievements.html" class="nav-link active"><span class="nav-icon">🏆</span> Achievements</a>
+      <a href="profile.html" class="nav-link"><span class="nav-icon">👤</span> Profile</a>
+      <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-badge">
+        <div class="user-avatar-circle">U</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">User</span>
+          <span class="user-mini-xp">0 XP</span>
+        </div>
+      </div>
+      <button class="btn-logout-action" title="Logout" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--text-muted);">
+        🚪
+      </button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" aria-label="Open Sidebar Menu">☰</button>
+        <span style="font-weight: 700; color: var(--text-muted); font-size: 0.95rem;">Achievements & Milestones</span>
+      </div>
+
+      <div class="topbar-gamification">
+        <span id="topbar-streak-val" class="gamify-pill streak">🔥 0 Day Streak</span>
+        <span id="topbar-xp-val" class="gamify-pill xp">⭐ 0 XP</span>
+        <button class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">🏆 Achievements & Badges</h1>
+          <p class="page-subtitle">Celebrate your consistency and unlock milestones as you level up your wellness.</p>
+        </div>
+      </div>
+
+      <!-- Overview Cards -->
+      <div class="metrics-grid" style="margin-bottom: 2rem;">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Total Wellness XP</span>
+            <div class="metric-icon-box" style="color: #f59e0b;">⭐</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="achieve-xp-val" class="metric-value">0 XP</span>
+          </div>
+          <div class="metric-subtext">Earned from daily healthy actions</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Current Active Streak</span>
+            <div class="metric-icon-box" style="color: #ea580c;">🔥</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="achieve-streak-val" class="metric-value">0 Days</span>
+          </div>
+          <div class="metric-subtext">Consecutive active wellness days</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Badges Collected</span>
+            <div class="metric-icon-box" style="color: #10b981;">🎖️</div>
+          </div>
+          <div class="metric-val-wrapper">
+            <span id="achieve-count-val" class="metric-value">0 / 0</span>
+          </div>
+          <div class="progress-bar-container">
+            <div id="achieve-progress-fill" class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+          <div id="achieve-rate-val" class="metric-subtext">0% Unlocked</div>
+        </div>
+      </div>
+
+      <!-- Badges Gallery Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎖️ Milestone Badges Gallery</span>
+        </div>
+        <div id="badges-grid-container" class="badges-grid">
+          <div class="skeleton" style="height: 180px;"></div>
+          <div class="skeleton" style="height: 180px;"></div>
+          <div class="skeleton" style="height: 180px;"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/achievements.js"></script>
+</body>
+</html>
+

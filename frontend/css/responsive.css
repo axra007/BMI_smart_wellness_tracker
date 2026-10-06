@@ -1,0 +1,115 @@
+/* ==========================================================================
+   BMI+ — Responsive Styles
+   ========================================================================== */
+
+/* Tablet & Smaller Desktops */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablets & Large Mobile */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 280px;
+  }
+
+  /* App Sidebar becomes a flyout drawer */
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  /* Sidebar overlay backdrop */
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 95;
+  }
+
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
+  .app-main {
+    margin-left: 0;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .app-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .app-topbar {
+    padding: 0 1rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-levels-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mood-picker-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .auth-card {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.4rem; }
+  h3 { font-size: 1.2rem; }
+
+  .mood-picker-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .topbar-gamification {
+    gap: 0.5rem;
+  }
+
+  .gamify-pill {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .btn-lg {
+    width: 100%;
+  }
+
+  .badges-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
