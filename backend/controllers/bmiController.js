@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const BMIRecord = require('../models/BMIRecord');
 const User = require('../models/User');
 const { awardXP, updateStreak } = require('../utils/gamification');
@@ -124,3 +125,112 @@ exports.getLatestBMI = async (req, res) => {
   }
 };
 
+/**
+ * @route   PUT /api/bmi/:id
+ * @desc    Update an existing BMI record (recalculates BMI & category)
+ * @access  Private
+ */
+exports.updateBMI = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid record ID.' });
+    }
+
+    const { height, weight, notes } = req.body;
+
+    if (!height || !weight) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide both height (cm) and weight (kg).',
+      });
+    }
+
+    const numHeight = Number(height);
+    const numWeight = Number(weight);
+
+    if (numHeight < 30 || numHeight > 280) {
+      return res.status(400).json({ success: false, message: 'Height must be between 30 cm and 280 cm.' });
+    }
+    if (numWeight < 10 || numWeight > 500) {
+      return res.status(400).json({ success: false, message: 'Weight must be between 10 kg and 500 kg.' });
+    }
+
+    // Ownership check — only the owner can update
+    const record = await BMIRecord.findOne({ _id: id, user: req.user._id });
+    if (!record) {
+      return res.status(404).json({ success: false, message: 'BMI record not found.' });
+    }
+
+    const heightInMeters = numHeight / 100;
+    const bmi = Number((numWeight / (heightInMeters * heightInMeters)).toFixed(1));
+    const category = getBMICategory(bmi);
+
+    record.height = numHeight;
+    record.weight = numWeight;
+    record.bmi = bmi;
+    record.category = category;
+    record.notes = notes || '';
+    await record.save();
+
+    await User.findByIdAndUpdate(req.user._id, {
+      'profile.height': numHeight,
+      'profile.weight': numWeight,
+      'profile.isProfileComplete': true,
+    });
+
+    return res.json({
+      success: true,
+      message: 'BMI record updated successfully!',
+      record,
+    });
+  } catch (error) {
+    console.error('Update BMI error:', error);
+    return res.status(500).json({ success: false, message: error.message || 'Error updating BMI record.' });
+  }
+};
+
+/**
+ * @route   DELETE /api/bmi/:id
+ * @desc    Delete a BMI record
+ * @access  Private
+ */
+exports.deleteBMI = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid record ID.' });
+    }
+
+    // Ownership check — only the owner can delete
+    const record = await BMIRecord.findOneAndDelete({ _id: id, user: req.user._id });
+    if (!record) {
+      return res.status(404).json({ success: false, message: 'BMI record not found.' });
+    }
+
+    const remainingRecord = await BMIRecord.findOne({ user: req.user._id }).sort({ date: -1 });
+    if (remainingRecord) {
+      await User.findByIdAndUpdate(req.user._id, {
+        'profile.height': remainingRecord.height,
+        'profile.weight': remainingRecord.weight,
+        'profile.isProfileComplete': true,
+      });
+    } else {
+      await User.findByIdAndUpdate(req.user._id, {
+        'profile.height': null,
+        'profile.weight': null,
+        'profile.isProfileComplete': false,
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: 'BMI record deleted.',
+    });
+  } catch (error) {
+    console.error('Delete BMI error:', error);
+    return res.status(500).json({ success: false, message: error.message || 'Error deleting BMI record.' });
+  }
+};
