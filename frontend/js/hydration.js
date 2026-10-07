@@ -64,6 +64,19 @@ async function addWater(amount) {
   }
 }
 
+async function deleteWaterLog(id) {
+  if (!confirm('Remove this water log entry?')) return;
+  try {
+    const res = await API.delete(`/hydration/${id}`);
+    if (res.success) {
+      showToast('Water log entry removed.', 'success');
+      await loadHydrationData();
+    }
+  } catch (err) {
+    showToast(err.message || 'Failed to delete entry.', 'error');
+  }
+}
+
 async function loadHydrationData() {
   try {
     const res = await API.get('/hydration');
@@ -111,7 +124,15 @@ function renderTodayWaterLogs(logs) {
             <div style="font-size: 0.75rem; color: var(--text-muted);">${time}</div>
           </div>
         </div>
-        <span class="badge badge-info">+${log.amount} ml</span>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span class="badge badge-info">+${log.amount} ml</span>
+          <button
+            class="btn btn-sm btn-danger"
+            title="Remove this entry"
+            onclick="deleteWaterLog('${log._id}')">
+            🗑
+          </button>
+        </div>
       </div>
     `;
     })

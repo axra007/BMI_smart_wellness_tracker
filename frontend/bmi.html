@@ -90,9 +90,14 @@
               <input type="text" id="bmi-notes" class="form-control" placeholder="e.g. Morning fasting measurement" />
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg w-full">
-              Calculate & Log BMI
-            </button>
+            <div style="display:flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <button type="submit" id="bmi-submit-btn" class="btn btn-primary btn-lg" style="flex:1;">
+                Calculate &amp; Log BMI
+              </button>
+              <button type="button" id="bmi-cancel-edit-btn" class="btn btn-outline btn-lg" style="display:none; white-space:nowrap;">
+                &#10005; Cancel Edit
+              </button>
+            </div>
           </form>
 
           <!-- Result & Gauge Preview -->
@@ -152,10 +157,11 @@
                 <th>Weight</th>
                 <th>Height</th>
                 <th>Note</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody id="bmi-history-tbody">
-              <tr><td colspan="6" style="text-align: center;">Loading history...</td></tr>
+              <tr><td colspan="7" style="text-align: center;">Loading history...</td></tr>
             </tbody>
           </table>
         </div>

@@ -145,3 +145,30 @@ exports.getHydration = async (req, res) => {
   }
 };
 
+/**
+ * @route   DELETE /api/hydration/:id
+ * @desc    Delete a hydration log entry
+ * @access  Private
+ */
+exports.deleteHydration = async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid record ID.' });
+    }
+
+    const Hydration = require('../models/Hydration');
+    const record = await Hydration.findOneAndDelete({ _id: id, user: req.user._id });
+
+    if (!record) {
+      return res.status(404).json({ success: false, message: 'Hydration record not found.' });
+    }
+
+    return res.json({ success: true, message: 'Water log entry deleted.' });
+  } catch (error) {
+    console.error('Delete hydration error:', error);
+    return res.status(500).json({ success: false, message: error.message || 'Error deleting record.' });
+  }
+};
